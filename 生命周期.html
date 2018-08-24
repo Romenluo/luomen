@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <h1>生命周期钩子函数演示</h1>
+    <div>文本内容扩展{{message}}</div>
+    <input type="text" v-model="message">
+    <button @click="app.$destroy()">销毁</button>
+</div>
+<script>
+    var app = new vx({
+        el:'#app',
+        data:{
+            message: '被创建'
+        },
+        beforeCreate:function() {
+            /*el和data并没有初始化*/
+            console.log("第一阶段：el和data并没有初始化");
+            console.log('el:'+this.$el);
+            console.log('data:'+this.$data);
+            console.log('el:'+this.message);
+        },
+        created:function () {
+            /*完成了 data 数据的初始化，el没有*/
+            console.log("第二阶段：完成了 data 数据的初始化，el没有");
+            console.log('el:'+this.$el);
+            console.log('data:'+this.$data);
+            console.log('el:'+this.message);
+        },
+        beforeMount:function () {
+            console.log("第三阶段：挂载前，完成了 data 和el数据的初始化");
+            console.log('el:'+this.$el);
+            console.log('data:'+this.$data);
+            console.log('el:'+this.message);
+        },
+        mounted:function () {
+            console.log("第四阶段：完成了挂载");
+            console.log('el:'+this.$el);
+            console.log('data:'+this.$data);
+            console.log('el:'+this.message);
+        },
+        beforeUpdate: function () {
+            console.group('阶段五：【beforeUpdate】 数据更新前');
+            console.log("el     : " + this.$el); //undefined
+            console.log("data   : " + this.$data); //undefined
+            console.log("message: " + this.message)
+        },
+        updated: function () {
+            console.group('阶段六：【updated】 被更新后');
+            console.log( "el     : " + this.$el); //undefined
+            console.log("data   : " + this.$data); //undefined
+            console.log("message: " + this.message)
+        },
+        beforeDestroy: function () {
+            console.group('阶段七：【beforeDestroy】 销毁之前');
+            console.log("el     : " + this.$el); //undefined
+            console.log("data   : " + this.$data); //undefined
+            console.log("message: " + this.message)
+        },
+        destroyed: function () {
+            console.group('阶段八：【destroyed】 销毁之后')
+            console.log("el     : " + this.$el); //undefined
+            console.log("data   : " + this.$data); //undefined
+            console.log("message: " + this.message)
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <style>
+        body {
+
+        }
+    </style>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <div v-csii-color="color">你好！世界。</div>
+</div>
+
+<script>
+/*[注：自定义指令必须放在new vx前面，否则无效]*/
+    /*自定义指令，改变字颜色*/
+    vx.directive('csiiColor', {
+        bind: function (el, binding, vnode) { /*第一阶段被绑定*/
+            console.log('阶段一：bind');
+        },
+        inserted: function (el, binding, vnode) { /*第二阶段，绑定元素插入父节点*/
+            el.style = 'color:' + binding.value;
+            el.style = 'width:400px;height:40px;background-color: #dedede;text-align: center;line-height: 40px;';
+
+            console.log('阶段二： inserted');
+        },
+        update: function () { /*第三阶段，组件更新*/
+            console.log('阶段三： update');
+        },
+        componentUpdated: function () { /*第四阶段，组件更新完成*/
+            console.log('阶段四： componentUpdated');
+        },
+        unbind: function() { /*第五阶段，解绑*/
+            console.log('阶段五： unbind');
+        }
+    });
+
+    var app = new vx({
+        el: '#app',
+        data: {
+            color: '#de2434'
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--计算属性使用computed-->
+    <p>原始消息：<input type="text" v-model="message"></p>
+    <p>已计算的反转消息:{{reversedMessage}}</p>
+
+    <input type="text" v-model="count">
+    <p>平方：{{square()}}</p>
+    <p>{{das}}</p><!--使用计算属性的返回值-->
+    <p>{{da()}}</p>
+
+    <!--侦听属性-->
+    <input type="text" v-model="lastName">
+    <div>{{foo}}</div>
+    
+    <!--计算属性默认只有 getter ，不过在需要时你也可以提供一个 setter -->
+    <div>计算属性默认值：{{fullName}}</div>
+    <div>计算属set：{{last}}</div>
+
+    <!--watch选项-->
+    <div>watch选项</div>
+    <div>当前气温：{{temperature}}</div>
+    <div>穿衣建议：{{advise}}</div>
+    <button @click="add">升温</button>
+    <button @click="reduce">降温</button>
+</div>
+<script>
+    var app = new vx({
+        el:'#app',
+        data:{
+            message:'hello world',
+            count:0,
+            foo:"hello",
+            lastName:'',
+            last: 'world',
+            temperature:25,
+            advise:'夹克',
+            advises:['短袖/短裤/迷你裙', '夹克/卫衣/秋裤', '羽绒服/围巾/手套']
+        },
+        computed:{/*计算属性是基于它们的依赖进行缓存的,不是响应式依赖*/
+            reversedMessage:function () {
+                return this.message.split('').reverse().join('');
+            },
+            counts:function () {
+                return 'hello'+'world';
+            },
+            das:function () {
+                return new Date();
+            },
+            fullName: {
+                // getter
+                get: function () {
+                    return 'hello ' + this.last
+                },
+                set: function (newValue) {
+                    this.last = '你好'
+                }
+            }
+        },
+        methods:{
+             square:function () {
+                return (this.count-0)+(this.count-0);
+            },
+            da:function () {
+                return new Date();
+            },
+            add:function () {
+                this.temperature+=5;
+            },
+            reduce:function () {
+                this.temperature-=5;
+            }
+        },
+        watch:{
+            lastName:function (val) {/*不能监听自身的属性而改变自己*/
+                this.foo=val+'world';
+            },
+            temperature:function (newVal,oldVal) {
+                /*监听temperature属性，当属性改变就监听，执行函数中的代码，如果属性值没发生改变就不执行*/
+                if(newVal>28){
+                   this.advise=this.advises[0];
+                }else if(newVal >= 10 && newVal <= 28){
+                    this.advise = this.advises[1];
+                }else {
+                    this.advise = this.advises[2];
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由二</title>
+    <style>
+        .main{
+            width: 800px;
+            height: 400px;
+            margin: 0px auto;
+            background-color: #dedede;
+
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--通过点击进入路由配置-->
+    <button @click="goto('First')">通过编码方式实现路由跳转</button>
+    <button @click="gotoParams()">带参数的路由跳转</button>
+    <router-view></router-view>
+</div>
+<template id="one">
+    <div class="main">通过编码方式实现路由跳转</div>
+</template>
+<template id="two">
+    <div class="main">带参数的路由跳转</div>
+</template>
+
+    <script src="js/vx3.min.js"></script>
+    <script src="js/vue-router.min.js"></script>
+    <script>
+        //1、定义路由组件
+        const First = {template:'#one'};
+        const Second = {template: '#two'}
+
+        //2、定义路由
+        const routes=[
+            {path:'/first',component:First},
+            {name : 'Second',path: '/Second', component: Second}
+        ]
+        //3、创建router实例，然后传值coutes配置
+        const router = new VueRouter({
+            routes: routes
+        });
+        //4、挂载
+        var  app = new vx({
+            el:'#app',
+            router,
+            methods:{
+                goto:function (path) {
+                    router.push(path)
+                },
+                gotoParams:function () {
+                    router.push({name:'Second', params: { userId: 123 }});/*, params: { userId: 123 }*/
+                }
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义事件</title>
+    <script src="js/vx3.min.js"></script>
+    <style>
+        .but{
+            width: 80px;
+            height: 30px;
+            background-color: #dedede;
+            border: 1px solid #dedede;
+            border-radius:5px ;
+            line-height: 30px;
+            text-align: center;
+        }
+        .one{
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <my-event @my-click="parentBut" class="one"></my-event>
+    <my-event @my-click="parentBut" class="one"></my-event>
+    <p>{{parentCount}}</p>
+</div>
+
+<template id="tmp">
+    <div class="but" @click="myBut">{{count}}</div>
+
+</template>
+<script>
+    vx.component('my-event',{
+        template:'#tmp',
+        data:function(){
+            return{
+                count:0
+            }
+        },
+        methods:{
+            myBut:function () {
+                this.count++;
+                this.$emit("my-click");
+            }
+        }
+    });
+    var app = new vx({
+        el:'#app',
+        data:{
+            parentCount:0
+        },
+        methods:{
+            parentBut:function () {
+                this.parentCount++;
+            }
+        }
+    });
+</script>
+</body>
+</html>

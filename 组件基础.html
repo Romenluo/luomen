@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件基础</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--自定义组件-->
+    <div>
+        <csii-msg></csii-msg>
+    </div>
+</div>
+<template id="tmp"><!--将此模版添加到button-counter自定义标签中,[注：模版不能写到使用自定义元素下]-->
+    <div>
+        <p>{{username}}</p>
+        <p>{{gender}}</p>
+        <button @click="goAdd">{{count}}</button>
+    </div>
+</template>
+<script>
+    var app = new vx({
+        el: '#app',
+        /*----------------------------------------------------*/
+        /*自定义组件*/
+        components: {
+            /*自定义一个组件*/
+            'CsiiMsg': { /*组件名，驼峰式写法*/
+                template: '#tmp', /*添加到模版中*/
+                data: function () {/*data数据，必须是一个函数*/
+                    return {
+                        count: 0,
+                        username: '罗门',
+                        gender: '男'
+                    }
+                },
+                methods: {
+                    goAdd: function () {
+                        this.count++
+                    }
+                }
+            }
+        }
+        /*-----------------------------------------------------*/
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内部指令</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--v-if指令-->
+    <p v-if="login=='csii'">登录</p>
+    <p v-else-if="login=='custom'">未登录：游客</p>
+    <p v-else>北京市朝阳区</p>
+    <!--***************************************************-->
+    <!-- v-if与v-show的区别：v-if如果不满足条件的就不显示元素，v-show如果值是true就显示，但是是改变display的
+    值，隐藏或显示。none或block-->
+    <!--v-show指令-->
+    <p v-show="show">我是显示的</p>
+    <p v-show="!show">我是不显示的</p>
+    <!--********************************************************-->
+    <!--v-for指令，循环渲染元素-->
+    <p v-for="item in items">{{item}}</p>
+
+    <!--***********************************************-->
+    <!--v-text和v-html指令-->
+    <p v-text="me"></p>
+    <span v-html="ht"></span>
+
+    <!--******************************************-->
+    <!--v-on处理一些监听事件-->
+    <button @click="click">我点</button><br>
+
+    <!--事件绑定-->
+    <input type="text" v-model="inputStr"/>
+    <p>{{inputStr}}</p>
+
+    <!--动态绑定图片-->
+    <img :src="imageSrc"><button @click="butImage">换图片</button>
+
+    <!---->
+
+</div>
+<script>
+    var app=new vx({
+        el: '#app',
+        data: {
+            login: 'csii',
+            show: true,
+            items: ['中国','日本','美国','英国'],
+            me: '我要显示v-text',
+            ht:'<p>你好！世界</p>',
+            inputStr: '',
+            imageSrc:'./images/linux.jpg',
+            flag:true
+        },
+        methods:{
+            click:function (){
+                console.log("我点击了你")
+            },
+            butImage:function () {
+                if(this.flag==true){
+                    this.flag=false;
+                    this.imageSrc='./images/1F126111636-1.jpg'
+                }else {
+                    this.flag=true;
+                    this.imageSrc='./images/linux.jpg'
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

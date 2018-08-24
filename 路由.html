@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由</title>
+    <script src="js/vx3.min.js"></script>
+    <script src="js/vue-router.min.js"></script>
+    <style>
+    .main{
+        width: 800px;
+        height: 400px;
+        margin: 0px auto;
+        background-color: #dedede;
+
+    }
+</style>
+</head>
+<body>
+<div id="app">
+    <!--使用router-link做导航，通过传入 `to` 属性指定链接.<router-link> 默认会被渲染成一个 `<a>` 标签 -->
+    <router-link to="/one">页面一</router-link>
+    <router-link to="/two">页面二</router-link>
+    <!--路由出口，将页面渲染在此处-->
+    <router-view></router-view>
+</div>
+<template id="one">
+    <div class="main">页面一</div>
+</template>
+<template id="two">
+    <div class="main">页面二</div>
+</template>
+<script>
+    // 1. 定义 (路由) 组件。
+    // 可以从其他文件 import 进来
+    const One = {template:'#one'}
+    const Two = {template:'#two'}
+
+    // 2. 定义路由，每个路由应该映射一个组件。 其中"component" 可以通过 Vue.extend() 创建的组件构造器，
+    // 或者，只是一个组件配置对象。
+    const routes = [
+        {path:'/one',component:One},
+        {path:'/two',component:Two},
+    ];
+
+    // 3. 创建 router 实例，然后传 `routes` 配置
+    const router = new VueRouter({
+        routes: routes//也可以写成routes
+    })
+
+    // 4. 创建和挂载根实例。记得要通过 router 配置参数注入路由，
+    var app = new vx({
+        el:'#app',
+        router,
+        data:{
+
+        },
+        methods:{
+
+        }
+    });
+</script>
+
+</body>
+</html>

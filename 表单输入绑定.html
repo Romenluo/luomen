@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单输入绑定</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--双向绑定-->
+    文本：<input type="text" v-model="message"/>{{message}}<br>
+
+    <!--多行文本-->
+    多行文本：<textarea v-model="textMessage"></textarea><span>{{textMessage}}</span>
+
+    <!--复选框-->
+   <div>
+       <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+       <label for="jack">Jack</label>
+       <input type="checkbox" id="john" value="John" v-model="checkedNames">
+       <label for="john">John</label>
+       <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+       <label for="mike">Mike</label>
+       <p>{{checkedNames}}</p>
+   </div>
+
+    <!--*****************************************************-->
+    <!--单选按钮-->
+    <div>
+        <input type="radio" value="male" v-model="gender">男
+        <input type="radio" value="female" v-model="gender">女
+        <p>{{gender}}</p>
+    </div>
+
+    <!--****************************************************-->
+    <!--选择框-->
+    <div>
+        <select v-model="select">
+            <option disabled value="">请选择</option>
+            <option v-for="item in country">{{item.name}}</option>
+        </select>
+        <p>{{select}}</p>
+    </div>
+</div>
+
+
+
+<script>
+    var app = new vx({
+        el:'#app',
+        data:{
+            message:'',
+            textMessage:'',
+            checkedNames:[],
+            gender:'',
+            select:'',
+            country:[{'name':'中国'},{'name':'美国'},{'name':'英国'},{'name':'韩国'},{'name':'日本'}]
+        }
+    });
+</script>
+</body>
+</html>

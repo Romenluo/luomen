@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>子组件向父组件发送消息</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <child-demo v-on:upper-limit="warning" :co="initCount"></child-demo>
+        <!--传一个值给自定义组件，co为参数，count接收参数，将其显示在按钮上，当满足条件时，组件使用this.$emit传递一个数据
+        v-on:upper-limit表示获取一个点击事件，交由4父组件处理-->
+    </div>
+
+    <template id="tmp">
+        <button @click="but">点击次数{{count}}</button>
+    </template>
+<script>
+    /*定义一个全局的新组件*/
+    vx.component(
+        /*组件名*/
+        'ChildDemo',{
+            /*模版*/
+            template:'#tmp',
+            props:['co'],/*传值*/
+            data:function () {
+                return{
+                    count:this.co||0
+                }
+            },
+            methods:{
+                but:function () {
+                    this.count++;
+                    if(this.count>5){
+                        /*满足条件给父组件发送一个消息*/
+                        this.$emit('upper-limit')
+                    }
+                }
+            }
+        }
+    )
+
+    var app = new vx({
+        el:'#app',
+        data: {
+            initCount:2
+        },
+        methods: {
+            warning:function () {
+                console.log('点击达到了上限')
+            }
+        }
+    })
+</script>
+</body>
+</html>

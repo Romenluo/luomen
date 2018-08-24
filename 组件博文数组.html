@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件博文数组</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--自定义组件-->
+    <div>
+        <!--将aa传到自定义组件-->
+        <csii-msg v-for="post in posts" v-bind:bb="post.id" v-bind:aa="post.title" ></csii-msg><!---->
+    </div>
+</div>
+<template id="tmp"><!--将此模版添加到button-counter自定义标签中,[注：模版不能写到使用自定义元素下]-->
+    <div>
+        <p>{{bb}}:{{aa}}</p><!--使用aa接收传递过来的值-->
+    </div>
+</template>
+<script>
+    var app = new vx({
+        el: '#app',
+        data:{
+            /*定义一个数组*/
+            posts: [
+                { id: 1, title: 'My journey with Vue' },
+                { id: 2, title: 'Blogging with Vue' },
+                { id: 3, title: 'Why Vue is so fun' }
+            ]
+        },
+        /*----------------------------------------------------*/
+        /*自定义组件*/
+        components: {
+            /*自定义一个组件*/
+            'CsiiMsg': { /*组件名，驼峰式写法*/
+                template: '#tmp', /*添加到模版中*/
+                props:['aa','bb'],/*aa必须与元素身上的属性名一样*/
+                data (){
+                    return{
+
+                    }
+                }
+            }
+        }
+        /*-----------------------------------------------------*/
+    });
+</script>
+</body>
+</html>

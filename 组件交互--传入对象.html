@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传值--传入对象</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <child-demo v-bind:info="userInfo"></child-demo>
+</div>
+<template id="tmp">
+    <p>{{info.name}}:{{info.gender}}:{{info.age}}</p>
+</template>
+<script>
+    vx.component('child-demo',{
+        template:'#tmp',
+        props:['info']
+    })
+    var app=new vx({
+        el:'#app',
+        data:{
+            userInfo:{'name':'罗门','gender':'男','age':'23'}
+        }
+    });
+</script>
+</body>
+</html>

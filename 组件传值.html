@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传值</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--自定义组件-->
+    <div>
+        <csii-msg :aa="title"></csii-msg>
+    </div>
+</div>
+<template id="tmp"><!--将此模版添加到button-counter自定义标签中,[注：模版不能写到使用自定义元素下]-->
+    <div>
+        <p>{{aa}}</p><!--使用aa接收传递过来的值-->
+    </div>
+</template>
+<script>
+    var app = new vx({
+        el: '#app',
+        data:{
+            title:'组件传值'
+        },
+        /*----------------------------------------------------*/
+        /*自定义组件*/
+        components: {
+            /*自定义一个组件*/
+            'CsiiMsg': { /*组件名，驼峰式写法*/
+                template: '#tmp', /*添加到模版中*/
+                props:['aa'],/*aa必须与元素身上的属性名一样*/
+            }
+        }
+        /*-----------------------------------------------------*/
+    });
+</script>
+</body>
+</html>

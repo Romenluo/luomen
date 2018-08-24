@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内置组件</title>
+    <script src="js/vx3.min.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <csii-demo>
+        <template slot="info">余额不足</template><!--slot="info"中info与模版中的<slot name="info"></slot>的name相同-->
+        <template slot="btn">确定</template>
+    </csii-demo>
+</div>
+<template id="tmp">
+    <div class="bg">
+        <h4>温馨提示：</h4>
+        <p>
+            <slot name="info"></slot>
+        </p>
+        <button>
+            <slot name="btn"></slot>
+        </button>
+    </div>
+</template>
+<script>
+    var app = new vx({
+        el:'#app',
+        components:{
+            'CsiiDemo':{
+                template:'#tmp'
+
+            }
+        }
+    });
+</script>
+</body>
+</html>
